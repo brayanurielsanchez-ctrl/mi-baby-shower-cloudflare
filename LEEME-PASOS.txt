@@ -1,0 +1,30 @@
+MIGRACION DE BABY SHOWER A CLOUDFLARE PAGES
+
+1. Subir el contenido de ESTA carpeta a la RAIZ de un repositorio GitHub.
+   No subir el archivo ZIP sin descomprimir.
+2. En Cloudflare: Workers & Pages > Create application > Pages > Connect to Git.
+   Elegir el repositorio de GitHub y la rama main.
+   Build command: (vacio); Build output directory: public
+3. Cuando aparezca el proyecto Pages: Settings > Bindings > Add > D1 database.
+   Variable name: DB
+   Database: baby-shower-db
+   Guardar. Repetir en Production y Preview si vas a probar ambas.
+4. Settings > Variables and Secrets > Add:
+   Name: REVELACION_EQUIPO
+   Value: configurar PRIVADAMENTE en el panel de Cloudflare, no en GitHub
+   Preferir Secret si el panel ofrece esa opcion.
+   Guardar para Production. No poner el resultado en GitHub.
+5. Volver a Deployments y hacer Redeploy de la ultima version.
+6. Comprobar https://TU-SITIO.pages.dev/api/votos
+   Debe devolver {"nina":0,"nino":0,"miVoto":null} si la DB esta vacia.
+7. Comprobar https://TU-SITIO.pages.dev/api/deseos
+   Debe devolver [] si la DB esta vacia.
+8. Probar un voto, una confirmacion y un deseo desde la invitacion.
+9. Actualizar las etiquetas OpenGraph con la URL definitiva de Pages para la vista previa en WhatsApp.
+
+NOTAS:
+- El ZIP original de Netlify no contenia registros de invitados ni archivos de musica.
+- La revelacion esta en variable de servidor y requiere un voto registrado; aun asi,
+  alguien que vote puede descubrir el resultado antes de terminar la animacion.
+- La confirmacion por WhatsApp se conserva, y se agrego un formulario que guarda en D1.
+- Los datos antiguos de Netlify NO se migran automaticamente.
